@@ -61,7 +61,7 @@ models:
       google_sheets:
         +schema: google_sheets
 
-    # --- Gold: consumo. La capa la marca la database; el tipo de tabla, el
+        # --- Gold: consumo. La capa la marca la database; el tipo de tabla, el
     #     prefijo del modelo (dim_, fct_, agg_, int_).
     gold:
       +materialized: table
@@ -71,10 +71,16 @@ models:
         +schema: intermediate
       core:
         +schema: core
+        +meta:
+          owner: "equipo_core@civica.com"
       marketing:
         +schema: marketing
+        +meta:
+          owner: "equipo_marketing@civica.com"
       product:
         +schema: product
+        +meta:
+          owner: "equipo_product@civica.com"
 
 # =============================================================================
 # Seeds
