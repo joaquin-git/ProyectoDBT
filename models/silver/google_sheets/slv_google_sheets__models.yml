@@ -3,17 +3,18 @@ version: 2
 models:
   - name: slv_google_sheets__budget
     columns:
-          - name: _row
-            data_tests:
-              - not_null
-              - unique
-              - relationships:
-                  arguments:
-                    to: ref('slv_google_sheets__budget')
-                    field: product_id
-                    
-              - dbt_utils.accepted_range:
-                  arguments:
-                    min_value: 0
-                    inclusive: false
-                                
+      - name: budget_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: product_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('slv_sql_server_dbo__products')
+                field: product_id
+
+      - name: quantity_budgeted
+        data_tests:
+          - positive_values
