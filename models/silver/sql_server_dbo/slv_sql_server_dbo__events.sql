@@ -2,7 +2,9 @@
     config(
         materialized='incremental',
         incremental_strategy='merge',
-        unique_key='event_id'
+        unique_key='event_id',
+        on_schema_change='append_new_columns',
+        event_time='created_at_utc'
     )
 }}
 
@@ -23,7 +25,7 @@ with events as (
     select * from {{ ref('stg_sql_server_dbo__events') }}
     where not is_deleted
     {% if is_incremental() %}
-      and date_load > (select max(date_load) from {{ this }})
+      and date_load > (select dateadd('hour', -1, max(date_load)) from {{ this }})
     {% endif %}
 ),
 
