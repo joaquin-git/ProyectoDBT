@@ -7,7 +7,7 @@
 # El prefijo + indica que la clave es una config y no una subcarpeta.
 # =============================================================================
 
-name: curso_data_engineering
+name: ProyectoDBT
 version: '1.0.0'
 
 # Solo se usa al ejecutar dbt en local con profiles.yml. En dbt Platform la
@@ -59,7 +59,7 @@ on-run-end:
 # declara su access.
 # =============================================================================
 models:
-  curso_data_engineering:
+  ProyectoDBT:
     # Las tablas transient de Snowflake no tienen Fail-safe y su Time Travel es
     # de 1 día como máximo. Para tablas de consumo preferimos tablas normales.
     +transient: false
@@ -127,7 +127,7 @@ models:
 # =============================================================================
 # Van a Silver y no a Bronze: Bronze solo la escribe la herramienta de ingesta.
 seeds:
-  curso_data_engineering:
+  ProyectoDBT:
     +database: "{{ env_var('DBT_SILVER_DB') }}"
     +schema: seeds
     country_codes:
@@ -143,7 +143,7 @@ seeds:
 # Historial SCD2 en Silver. Nunca transient: un snapshot es la única copia de
 # la historia y no se puede reconstruir desde Bronze.
 snapshots:
-  curso_data_engineering:
+  ProyectoDBT:
     +database: "{{ env_var('DBT_SILVER_DB') }}"
     +schema: snapshots
     +transient: false
