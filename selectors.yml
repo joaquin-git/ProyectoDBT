@@ -28,10 +28,3 @@ selectors:
         - exclude:
             - method: resource_type
               value: snapshot
-
-  - name: selector_propio
-    description: selector propio
-    definition:
-      method: tag
-      value: core
-          

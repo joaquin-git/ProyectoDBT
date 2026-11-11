@@ -1,26 +1,35 @@
+-- =============================================================================
+-- fct_orders
+-- =============================================================================
+-- Hechos de pedidos. Grano: una fila por pedido.
+-- net_order_cost_usd = total_order_cost_usd - descuento de la promoción.
+-- =============================================================================
+
 with orders as (
-    select * from {{ ref('gold_orders__enriched') }}
+    select * from {{ ref('int_orders__enriched') }}
 ),
 
 final as (
     select
-        -- clave del hecho
           order_id
-
-        -- claves hacia las dimensiones
         , user_id
         , address_id
+        , shipping_state
+        , shipping_country
         , promo_id
-
-        -- fechas
-        , created_at_utc
-
-        -- atributos del pedido
         , order_status
-
-        -- métricas (los números)
-        , total_order_cost_usd
-
+        , shipping_service
+        , tracking_id
+        , created_at_utc                            as order_created_at_utc
+        , estimated_delivery_at_utc
+        , delivered_at_utc
+        , datediff('day', created_at_utc, delivered_at_utc) as days_to_deliver
+        , shipping_cost_usd
+        , order_cost_usd
+        , order_total_usd                           as total_order_cost_usd
+        , discount_usd
+        , order_total_usd - discount_usd            as net_order_cost_usd
+        , date_load
     from orders
 )
 
