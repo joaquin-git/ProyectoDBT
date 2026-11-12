@@ -37,6 +37,8 @@ sources:
                     field: product_id
           - name: quantity
             description: Unidades presupuestadas para el mes.
+            data_tests:
+              - positive_values
           - name: month
             description: Mes del presupuesto.
           - name: _fivetran_synced
