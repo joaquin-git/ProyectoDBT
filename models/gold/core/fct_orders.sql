@@ -30,6 +30,7 @@ final as (
         , discount_usd
         , order_total_usd - discount_usd            as net_order_cost_usd
         , date_load
+        , current_timestamp() as loaded_at_utc
     from orders
 )
 
